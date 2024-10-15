@@ -1,0 +1,33 @@
+{
+	"name": "@rbxts/better-gizmos",
+	"version": "0.0.1",
+	"description": "Visual debug library for Roblox.",
+	"main": "src/init.luau",
+	"types": "src/index.d.ts",
+	"files": ["src"],
+	"scripts": {
+		"build": "rbxtsc --type package",
+		"prepublishOnly": "bun run build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mathfox/rbx-better-gizmos.git"
+	},
+	"keywords": ["roblox", "roblox-ts", "topo", "hooks"],
+	"author": {
+		"name": "Ivan Leontev",
+		"url": "https://github.com/mathfox"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/mathfox/rbx-better-gizmos/issues"
+	},
+	"homepage": "https://github.com/mathfox/rbx-better-gizmos#readme",
+	"publishConfig": {
+		"access": "public"
+	},
+	"devDependencies": {
+		"@rbxts/compiler-types": "^3.0.0-types.0",
+		"@rbxts/types": "^1.0.805",
+	}
+}
