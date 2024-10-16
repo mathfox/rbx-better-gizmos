@@ -1,6 +1,6 @@
+import type { Constructable } from "./helpers";
 import type Arrow from "./Arrow";
 import type Box from "./Box";
-import type { Constructable } from "./helpers";
 import type Line from "./Line";
 import type Point from "./Point";
 import type Ray from "./Ray";
