@@ -52,7 +52,16 @@ end
 Gizmo:_construct()
 
 function Gizmo.new()
-	return Gizmo._construct({})
+	return Gizmo._construct({
+		color = Gizmo.color,
+	})
+end
+
+function Gizmo:destroy()
+	self.container:Destroy()
+	self.adornee:Destroy()
+
+	setmetatable(self :: any, nil)
 end
 
 return Gizmo
