@@ -2,66 +2,103 @@
 --!native
 --!optimize 2
 
-export type WireSphereImpl = {
-	__index: WireSphereImpl,
+local Gizmo = require(script.Parent.Gizmo)
 
-	draw: (
-		self: WireSphere,
-		position: Vector3,
-		radius: number,
-		style: {
-			scale: number?,
-			color: Color3?,
-			transparency: number?,
-			zindex: number?,
-			alwaysOnTop: boolean?,
-		}?
-	) -> { CylinderHandleAdornment },
+export type WireSphereProperties = {
+	adornee: PVInstance,
+	container: Instance,
+	color: Color3?,
+	scale: number,
+	transparency: number,
+	zindex: number,
+	alwaysOnTop: boolean,
 }
 
-export type WireSphere = typeof(setmetatable({} :: GizmoProperties, (nil :: any) :: WireSphereImpl))
+export type Output = { CylinderHandleAdornment }
+
+export type WireSphereImpl = WireSphereProperties & {
+	__index: WireSphereImpl,
+
+	default: () -> Output,
+	_construct: (self: {}, adornee: PVInstance, container: Instance) -> WireSphere,
+	new: (adornee: PVInstance, container: Instance) -> WireSphere,
+
+	draw: (self: WireSphere, position: Vector3, radius: number) -> Output,
+	assign: (self: WireSphere, output: Output, position: Vector3, radius: number) -> Output,
+}
+
+export type WireSphere = typeof(setmetatable({} :: WireSphereProperties, (nil :: any) :: WireSphereImpl))
 
 local WireSphere = {} :: WireSphereImpl
+WireSphere.__index = WireSphere
 
-function WireSphere:draw(position, radius, style)
-	local offset = (style and style.scale or 0.1) * 0.5
+WireSphere.adornee = nil
+WireSphere.container = nil
+WireSphere.color = nil
+WireSphere.scale = 0.1
+WireSphere.transparency = 0
+WireSphere.zindex = 0
+WireSphere.alwaysOnTop = true
+
+function WireSphere.default()
+	return {
+		Instance.new("CylinderHandleAdornment"),
+		Instance.new("CylinderHandleAdornment"),
+		Instance.new("CylinderHandleAdornment"),
+	}
+end
+
+function WireSphere:_construct(adornee, container)
+	self.adornee = adornee
+	self.container = container
+
+	setmetatable(self, WireSphere)
+
+	return self
+end
+
+WireSphere:_construct(Gizmo.adornee, Gizmo.container)
+
+function WireSphere.new(adornee, container)
+	return WireSphere._construct({
+		color = WireSphere.color,
+		scale = WireSphere.scale,
+		transparency = WireSphere.transparency,
+		zindex = WireSphere.zindex,
+		alwaysOnTop = WireSphere.alwaysOnTop,
+	}, adornee, container)
+end
+
+function WireSphere:assign(output, position, radius)
+	local offset = self.scale * 0.5
 	local outerRadius, innerRadius = radius + offset, radius - offset
 
 	local relativeOrientation = CFrame.new(position)
 
-	local adornmentX = Instance.new("CylinderHandleAdornment")
-	local adornmentY = Instance.new("CylinderHandleAdornment")
-	local adornmentZ = Instance.new("CylinderHandleAdornment")
+	for _, adornment in output do
+		adornment.Radius = outerRadius
+		adornment.InnerRadius = innerRadius
+		adornment.Height = self.scale
+		adornment.Color3 = self.color or Gizmo.color
+		adornment.Transparency = self.transparency
+		adornment.ZIndex = self.zindex
+		adornment.Adornee = self.adornee
+		adornment.AlwaysOnTop = self.alwaysOnTop
+	end
 
-	adornmentX.Radius = outerRadius
-	adornmentX.InnerRadius = innerRadius
-	adornmentX.Height = style and style.scale or 0.1
+	local adornmentX = output[1]
+	local adornmentY = output[2]
+	local adornmentZ = output[3]
+
 	adornmentX.CFrame = relativeOrientation
-	adornmentX.Color3 = style and style.color or Gizmo.color
-	adornmentX.Transparency = style and style.transparency or 0
-	adornmentX.ZIndex = style and style.zindex or 0
-	adornmentX.Adornee = self.adornee
-	adornmentX.AlwaysOnTop = style and style.alwaysOnTop or true
-
-	adornmentY.Radius = outerRadius
-	adornmentY.InnerRadius = innerRadius
-	adornmentY.Height = style and style.scale or 0.1
 	adornmentY.CFrame = relativeOrientation * CFrame.Angles(math.pi * 0.5, 0, 0)
-	adornmentY.Color3 = style and style.color or Gizmo.color
-	adornmentY.Transparency = style and style.transparency or 0
-	adornmentY.ZIndex = style and style.zindex or 0
-	adornmentY.Adornee = self.adornee
-	adornmentY.AlwaysOnTop = style and style.alwaysOnTop or true
-
-	adornmentZ.Radius = outerRadius
-	adornmentZ.InnerRadius = innerRadius
-	adornmentZ.Height = style and style.scale or 0.1
 	adornmentZ.CFrame = relativeOrientation * CFrame.Angles(0, math.pi * 0.5, 0)
-	adornmentZ.Color3 = style and style.color or Gizmo.color
-	adornmentZ.Transparency = style and style.transparency or 0
-	adornmentZ.ZIndex = style and style.zindex or 0
-	adornmentZ.Adornee = self.adornee
-	adornmentZ.AlwaysOnTop = style and style.alwaysOnTop or true
 
-	return { adornmentX, adornmentY, adornmentZ }
+	return output
 end
+
+function WireSphere:draw(position, radius)
+	return self:assign(WireSphere.default(), position, radius)
+end
+
+return WireSphere

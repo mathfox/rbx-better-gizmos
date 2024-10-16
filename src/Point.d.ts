@@ -1,6 +1,6 @@
 import type { Constructable, Draw } from "./helpers";
 
-interface Point {
+interface Point extends Draw<Point.Output, [position: Vector3]> {
 	readonly adornee: PVInstance;
 	readonly container: Instance;
 	color?: Color3;
@@ -10,12 +10,11 @@ interface Point {
 	alwaysOnTop: boolean;
 }
 
-type PointOutput = SphereHandleAdornment;
+declare namespace Point {
+	type Output = SphereHandleAdornment;
+}
 
-interface PointConstructor
-	extends Point,
-		Constructable<Point, [adornee: PVInstance, container: Instance]>,
-		Draw<PointOutput, [position: Vector3]> {
+interface PointConstructor extends Point, Constructable<Point, [adornee: PVInstance, container: Instance]> {
 	readonly __index: PointConstructor;
 }
 

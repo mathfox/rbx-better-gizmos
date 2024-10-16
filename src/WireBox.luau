@@ -138,22 +138,7 @@ function WireBox:assign(output, orientation, size)
 	adornmentZ4.Size = sizeZ
 	adornmentZ4.CFrame = relativeOrientation * CFrame.new(-x, -y, 0)
 
-	return {
-		adornmentX1,
-		adornmentX2,
-		adornmentX3,
-		adornmentX4,
-
-		adornmentY1,
-		adornmentY2,
-		adornmentY3,
-		adornmentY4,
-
-		adornmentZ1,
-		adornmentZ2,
-		adornmentZ3,
-		adornmentZ4,
-	}
+	return output
 end
 
 function WireBox:draw(orientation, size)

@@ -1,7 +1,7 @@
 import type { Tuple } from "@rbxts/phantom/src/Util/Tuple";
 import type { Constructable, Draw } from "./helpers";
 
-interface WireBox {
+interface WireBox extends Draw<WireBox.Output, [orientation: CFrame, size: Vector3]> {
 	readonly adornee: PVInstance;
 	readonly container: Instance;
 	color?: Color3;
@@ -18,10 +18,7 @@ declare namespace WireBox {
 /**
  * Returns [x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4] handles.
  */
-interface WireBoxConstructor
-	extends WireBox,
-		Constructable<WireBox, [adornee: PVInstance, container: Instance]>,
-		Draw<WireBox.Output, [orientation: CFrame, size: Vector3]> {
+interface WireBoxConstructor extends WireBox, Constructable<WireBox, [adornee: PVInstance, container: Instance]> {
 	readonly __index: WireBoxConstructor;
 }
 

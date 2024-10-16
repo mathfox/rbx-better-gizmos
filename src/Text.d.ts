@@ -1,6 +1,6 @@
 import type { Constructable, Draw } from "./helpers";
 
-interface Text {
+interface Text extends Draw<Text.Output, [position: Vector3, text: string]> {
 	readonly adornee: PVInstance;
 	readonly container: Instance;
 	color?: Color3;
@@ -17,10 +17,7 @@ declare namespace Text {
 	}
 }
 
-interface TextConstructor
-	extends Text,
-		Constructable<Text, [adornee: PVInstance, container: Instance]>,
-		Draw<Text.Output, [position: Vector3, text: string]> {
+interface TextConstructor extends Text, Constructable<Text, [adornee: PVInstance, container: Instance]> {
 	readonly __index: TextConstructor;
 }
 

@@ -1,4 +1,6 @@
+import type Arrow from "./Arrow";
 import type { Constructable } from "./helpers";
+import type Point from "./Point";
 
 /**
  * Basically a wrapper around container and adornee part.
@@ -16,7 +18,8 @@ interface Gizmo {
 	 */
 	destroy(): void;
 
-	//readonly point: Gizmo.PointConstructor;
+	readonly arrow: Arrow;
+	readonly point: Point;
 }
 
 declare interface GizmoConstructor extends Omit<Gizmo, "destroy">, Constructable<Gizmo, []> {

@@ -1,6 +1,6 @@
 import type { Constructable, Draw } from "./helpers";
 
-interface Sphere {
+interface Sphere extends Draw<Sphere.Output, [position: Vector3, radius: number]> {
 	readonly adornee: PVInstance;
 	readonly container: Instance;
 	color?: Color3;
@@ -14,10 +14,7 @@ declare namespace Sphere {
 	type Output = SphereHandleAdornment;
 }
 
-interface SphereConstructor
-	extends Sphere,
-		Constructable<Sphere, [adornee: PVInstance, container: Instance]>,
-		Draw<Sphere.Output, [position: Vector3, radius: number]> {
+interface SphereConstructor extends Sphere, Constructable<Sphere, [adornee: PVInstance, container: Instance]> {
 	readonly __index: SphereConstructor;
 }
 
