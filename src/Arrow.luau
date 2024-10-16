@@ -2,7 +2,32 @@
 --!native
 --!optimize 2
 
-local Arrow = {} :: ArrowImpl
+local ArrowTypes = require(script.Parent.ArrowTypes)
+
+local Arrow = {} :: ArrowTypes.ArrowImpl
+Arrow.__index = Arrow
+
+Arrow.color = nil
+Arrow.scale = 0.1
+Arrow.transparency = 0
+Arrow.zindex = 0
+Arrow.alwaysOnTop = true
+
+function Arrow:_construct(adornee, container)
+	setmetatable(self, Arrow)
+
+	return self
+end
+
+function Arrow.new(adornee, container)
+	return Arrow._construct({
+		color = Arrow.color,
+		scale = Arrow.scale,
+		transparency = Arrow.transparency,
+		zindex = Arrow.zindex,
+		alwaysOnTop = Arrow.alwaysOnTop,
+	}, adornee, container)
+end
 
 function Arrow:draw(from, to, style)
 	local coneHeight = (style and style.scale or 0.1) * 3

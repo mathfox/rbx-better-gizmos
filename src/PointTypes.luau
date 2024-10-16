@@ -15,11 +15,12 @@ export type PointProperties = {
 export type PointImpl = PointProperties & {
 	__index: PointImpl,
 
-	_construct: (self: {}) -> Point,
+	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Point,
 
 	new: (adornee: PVInstance, container: Instance) -> Point,
 
 	draw: (self: Point, position: Vector3) -> SphereHandleAdornment,
+
 	assign: (self: Point, adornment: SphereHandleAdornment, position: Vector3) -> (),
 }
 
