@@ -1,3 +1,3 @@
-export type DefaultProperties<TDefaultsProperties> = TDefaultsProperties & {
-	_defaultProps: TDefaultsProperties;
+export type DefaultProperties<TProperties> = TProperties & {
+	readonly _defaultProps: TProperties;
 };

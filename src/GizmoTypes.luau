@@ -9,6 +9,8 @@ export type GizmoImpl = {
 
 	new: () -> Gizmo,
 
+	_construct: (self: {}) -> Gizmo,
+
 	destroy: (self: Gizmo) -> (),
 }
 

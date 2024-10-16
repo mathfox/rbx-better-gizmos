@@ -1,52 +1,6 @@
 import type { Tuple } from "@rbxts/phantom/src/Util";
 
-/**
- * Basically a wrapper around container and adornee part.
- */
-interface Gizmo {
-	/**
-	 * The container used to hold all of the handles.
-	 */
-	readonly container: Folder;
-	readonly adornee: Part;
-
-	/**
-	 * Destroys the container and adornee part.
-	 * No further method calls are allow after this call.
-	 */
-	destroy(): void;
-
-	readonly point: Gizmo.PointConstructor;
-}
-
 declare namespace Gizmo {
-	export type DefaultProperties<TDefaultsProperties> = TDefaultsProperties & {
-		_defaultProps: TDefaultsProperties;
-	};
-
-	export interface Draw<TOutput, TParams extends unknown[]> {
-		/**
-		 * Constructs a new instance from the given parameters.
-		 */
-		draw(...args: TParams): TOutput;
-
-		/**
-		 * Assigns all of the properties of TOutput.
-		 * The same as `draw` method, except it does not create a new instance.
-		 */
-		assign(output: TOutput, ...args: TParams): TOutput;
-	}
-
-	export interface PointConstructor
-		extends Draw<SphereHandleAdornment, [position: Vector3]>,
-			DefaultProperties<{
-				color?: Color3;
-				radius: number;
-				transparency: number;
-				zindex: number;
-				alwaysOnTop: boolean;
-			}> {}
-
 	export interface Box
 		extends Draw<
 			BoxHandleAdornment,
@@ -191,18 +145,3 @@ declare namespace Gizmo {
 			]
 		> {}
 }
-
-declare interface GizmoConstructor {
-	__index: GizmoConstructor;
-
-	/**
-	 * @default Color3.fromRGB(255, 255, 0)
-	 */
-	color: Color3;
-
-	new (): Gizmo;
-}
-
-declare const Gizmo: GizmoConstructor;
-
-export = Gizmo;
