@@ -23,5 +23,4 @@ interface SphereConstructor
 
 declare const Sphere: SphereConstructor;
 
-export as namespace Sphere;
 export = Sphere;

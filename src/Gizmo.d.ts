@@ -30,5 +30,4 @@ declare interface GizmoConstructor extends Omit<Gizmo, "destroy">, Constructable
 
 declare const Gizmo: GizmoConstructor;
 
-export as namespace Gizmo;
 export = Gizmo;

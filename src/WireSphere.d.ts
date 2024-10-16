@@ -22,5 +22,4 @@ interface WireSphereConstructor
 
 declare const WireSphere: WireSphereConstructor;
 
-export as namespace WireSphere;
 export = WireSphere;

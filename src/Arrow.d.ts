@@ -26,5 +26,4 @@ interface ArrowConstructor
 
 declare const Arrow: ArrowConstructor;
 
-export as namespace Arrow;
 export = Arrow;

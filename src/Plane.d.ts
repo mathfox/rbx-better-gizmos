@@ -23,5 +23,4 @@ interface PlaneConstructor
 
 declare const Plane: PlaneConstructor;
 
-export as namespace Plane;
 export = Plane;

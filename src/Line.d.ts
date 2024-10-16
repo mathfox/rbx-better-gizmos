@@ -21,5 +21,4 @@ interface LineConstructor
 
 declare const Line: LineConstructor;
 
-export as namespace Line;
 export = Line;

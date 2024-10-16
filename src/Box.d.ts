@@ -23,5 +23,4 @@ interface BoxConstructor
 
 declare const Box: BoxConstructor;
 
-export as namespace Box;
 export = Box;

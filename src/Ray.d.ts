@@ -24,5 +24,4 @@ interface RayConstructor
 
 declare const Ray: RayConstructor;
 
-export as namespace Ray;
 export = Ray;

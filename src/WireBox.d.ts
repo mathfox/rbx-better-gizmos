@@ -27,5 +27,4 @@ interface WireBoxConstructor
 
 declare const WireBox: WireBoxConstructor;
 
-export as namespace WireBox;
 export = WireBox;

@@ -26,5 +26,4 @@ interface TextConstructor
 
 declare const Text: TextConstructor;
 
-export as namespace Text;
 export = Text;

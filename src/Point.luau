@@ -2,6 +2,8 @@
 --!native
 --!optimize 2
 
+local Gizmo = require(script.Parent.Gizmo)
+
 export type PointProperties = {
 	adornee: PVInstance,
 	container: Instance,
@@ -27,11 +29,11 @@ export type PointImpl = PointProperties & {
 
 export type Point = typeof(setmetatable({} :: PointProperties, (nil :: any) :: PointImpl))
 
-local Gizmo = require(script.Parent.Gizmo)
-
 local Point = {} :: PointImpl
 Point.__index = Point
 
+Point.adornee = nil
+Point.container = nil
 Point.color = nil
 Point.radius = 0.1
 Point.transparency = 0
@@ -63,7 +65,9 @@ function Point.new(adornee, container)
 	}, adornee, container)
 end
 
-function Point:assign(adornment, position)
+function Point:assign(output, position)
+	local adornment = output
+
 	adornment.Radius = self.radius * 0.5
 	adornment.CFrame = CFrame.new(position)
 	adornment.Color3 = self.color or Gizmo.color

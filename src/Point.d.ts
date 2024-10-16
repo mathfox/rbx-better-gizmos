@@ -21,5 +21,4 @@ interface PointConstructor
 
 declare const Point: PointConstructor;
 
-export as namespace Point;
 export = Point;
