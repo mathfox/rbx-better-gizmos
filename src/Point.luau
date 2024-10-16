@@ -8,6 +8,7 @@ local PointTypes = require(script.Parent.PointTypes)
 local Point = {} :: PointTypes.PointImpl
 Point.__index = Point
 
+Point.color = nil
 Point.radius = 0.1
 Point.alwaysOnTop = true
 Point.transparency = 0
