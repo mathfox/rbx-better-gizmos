@@ -30,7 +30,14 @@ export type WireSphereImpl = WireSphereProperties & {
 export type WireSphere = typeof(setmetatable({} :: WireSphereProperties, (nil :: any) :: WireSphereImpl))
 
 local WireSphere = {} :: WireSphereImpl
-WireSphere.__index = WireSphere
+
+function WireSphere:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(WireSphere, index)
+end
 
 WireSphere.adornee = nil
 WireSphere.container = nil
@@ -79,7 +86,7 @@ function WireSphere:assign(output, position, radius)
 		adornment.Radius = outerRadius
 		adornment.InnerRadius = innerRadius
 		adornment.Height = self.scale
-		adornment.Color3 = self.color or Gizmo.color
+		adornment.Color3 = self.color
 		adornment.Transparency = self.transparency
 		adornment.ZIndex = self.zindex
 		adornment.Adornee = self.adornee

@@ -33,7 +33,14 @@ export type TextImpl = TextProperties & {
 export type Text = typeof(setmetatable({} :: TextProperties, (nil :: any) :: TextImpl))
 
 local Text = {} :: TextImpl
-Text.__index = Text
+
+function Text:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Text, index)
+end
 
 Text.adornee = nil
 Text.container = nil
@@ -86,7 +93,7 @@ function Text:assign(output, position, text)
 	label.Size = UDim2.fromScale(1, 1)
 	label.BackgroundTransparency = 1
 	label.Font = Enum.Font.RobotoMono
-	label.TextColor3 = self.color or Gizmo.color
+	label.TextColor3 = self.color
 	label.TextTransparency = self.transparency
 	label.TextScaled = true
 	label.Text = text
@@ -96,7 +103,7 @@ function Text:assign(output, position, text)
 end
 
 function Text:draw(position, text)
-	return self:assign(Text.default(), position, text)
+	return self:assign(self.default(), position, text)
 end
 
 return Text

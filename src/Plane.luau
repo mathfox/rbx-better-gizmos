@@ -30,7 +30,14 @@ export type PlaneImpl = PlaneProperties & {
 export type Plane = typeof(setmetatable({} :: PlaneProperties, (nil :: any) :: PlaneImpl))
 
 local Plane = {} :: PlaneImpl
-Plane.__index = Plane
+
+function Plane:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Plane, index)
+end
 
 Plane.adornee = nil
 Plane.container = nil
@@ -72,7 +79,7 @@ function Plane:assign(output, cf, size)
 
 	adornmentPlane.CFrame = cf
 	adornmentPlane.Size = Vector3.new((size :: Vector2).X, (size :: Vector2).Y, 0)
-	adornmentPlane.Color3 = self.color or Gizmo.color
+	adornmentPlane.Color3 = self.color
 	adornmentPlane.Transparency = self.transparency
 	adornmentPlane.ZIndex = self.zindex
 	adornmentPlane.Adornee = self.adornee
@@ -83,7 +90,7 @@ function Plane:assign(output, cf, size)
 end
 
 function Plane:draw(cf, size)
-	return self:assign(Plane.default(), cf, size)
+	return self:assign(self.default(), cf, size)
 end
 
 return Plane

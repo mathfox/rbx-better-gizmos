@@ -30,7 +30,14 @@ export type SphereImpl = SphereProperties & {
 export type Sphere = typeof(setmetatable({} :: SphereProperties, (nil :: any) :: SphereImpl))
 
 local Sphere = {} :: SphereImpl
-Sphere.__index = Sphere
+
+function Sphere:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Sphere, index)
+end
 
 Sphere.adornee = nil
 Sphere.container = nil
@@ -70,7 +77,7 @@ function Sphere:assign(output, position, radius)
 
 	adornment.Radius = radius
 	adornment.CFrame = CFrame.new(position)
-	adornment.Color3 = self.color or Gizmo.color
+	adornment.Color3 = self.color
 	adornment.Transparency = self.transparency
 	adornment.ZIndex = self.zindex
 	adornment.Adornee = self.adornee
@@ -81,7 +88,7 @@ function Sphere:assign(output, position, radius)
 end
 
 function Sphere:draw(position, radius)
-	return self:assign(Sphere.default(), position, radius)
+	return self:assign(self.default(), position, radius)
 end
 
 return Sphere

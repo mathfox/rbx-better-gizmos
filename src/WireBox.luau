@@ -30,7 +30,14 @@ export type WireBoxImpl = WireBoxProperties & {
 export type WireBox = typeof(setmetatable({} :: WireBoxProperties, (nil :: any) :: WireBoxImpl))
 
 local WireBox = {} :: WireBoxImpl
-WireBox.__index = WireBox
+
+function WireBox:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(WireBox, index)
+end
 
 WireBox.adornee = nil
 WireBox.container = nil
@@ -95,7 +102,7 @@ function WireBox:assign(output, orientation, size)
 	local adornmentZ4 = output[12]
 
 	for _, adornment in output do
-		adornmentX1.Color3 = self.color or Gizmo.color
+		adornmentX1.Color3 = self.color
 		adornmentX1.Transparency = self.transparency
 		adornmentX1.ZIndex = self.zindex
 		adornmentX1.Adornee = self.adornee
@@ -143,7 +150,7 @@ function WireBox:assign(output, orientation, size)
 end
 
 function WireBox:draw(orientation, size)
-	return self:assign(WireBox.default(), orientation, size)
+	return self:assign(self.default(), orientation, size)
 end
 
 return WireBox

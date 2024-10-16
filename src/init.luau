@@ -14,6 +14,21 @@ local Text = require(script.Text)
 local WireBox = require(script.WireBox)
 local WireSphere = require(script.WireSphere)
 
+type ModifiedGizmoProperties = Gizmo.GizmoProperties & {
+	arrow: Arrow.Arrow,
+	box: Box.Box,
+	line: Line.Line,
+	plane: Plane.Plane,
+	point: Point.Point,
+	ray: Ray.Ray,
+	sphere: Sphere.Sphere,
+	text: Text.Text,
+	wirebox: WireBox.WireBox,
+	wiresphere: WireSphere.WireSphere,
+}
+
+type ModifiedGizmoImpl = Gizmo.GizmoImpl & ModifiedGizmoProperties
+
 Gizmo.arrow = Arrow
 Gizmo.box = Box
 Gizmo.line = Line
@@ -25,4 +40,4 @@ Gizmo.text = Text
 Gizmo.wirebox = WireBox
 Gizmo.wiresphere = WireSphere
 
-return Gizmo
+return Gizmo :: typeof(setmetatable({} :: ModifiedGizmoProperties, (nil :: any) :: ModifiedGizmoImpl))

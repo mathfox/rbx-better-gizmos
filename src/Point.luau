@@ -30,7 +30,14 @@ export type PointImpl = PointProperties & {
 export type Point = typeof(setmetatable({} :: PointProperties, (nil :: any) :: PointImpl))
 
 local Point = {} :: PointImpl
-Point.__index = Point
+
+function Point:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Point, index)
+end
 
 Point.adornee = nil
 Point.container = nil
@@ -70,7 +77,7 @@ function Point:assign(output, position)
 
 	adornment.Radius = self.radius * 0.5
 	adornment.CFrame = CFrame.new(position)
-	adornment.Color3 = self.color or Gizmo.color
+	adornment.Color3 = self.color
 	adornment.Transparency = self.transparency
 	adornment.ZIndex = self.zindex
 	adornment.Adornee = self.adornee

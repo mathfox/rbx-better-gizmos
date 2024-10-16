@@ -17,36 +17,11 @@ export type GizmoImpl = {
 export type GizmoProperties = {
 	adornee: PVInstance,
 	container: Folder,
-
-	--point: Point,
-	--box: Box,
-	--wirebox: WireBox,
-	--sphere: Sphere,
-	--wiresphere: WireSphere,
-	--line: Line,
-	--arrow: Arrow,
-	--ray: Ray,
-	--plane: Plane,
-	--text: Text,
 }
 
 export type Gizmo = typeof(setmetatable({} :: GizmoProperties, (nil :: any) :: GizmoImpl))
 
-local Gizmo = {} :: {
-	new: (
-	) -> Gizmo & {
-		--point: PointTypes.Point,
-		--box: Box,
-		--wirebox: WireBox,
-		--sphere: Sphere,
-		--wiresphere: WireSphere,
-		--line: Line,
-		--arrow: Arrow,
-		--ray: Ray,
-		--plane: Plane,
-		--text: Text,
-	},
-} & GizmoImpl & Gizmo
+local Gizmo = {} :: GizmoImpl
 
 Gizmo.color = Color3.fromRGB(255, 255, 0)
 

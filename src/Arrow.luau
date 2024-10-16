@@ -33,7 +33,14 @@ export type ArrowImpl = ArrowProperties & {
 export type Arrow = typeof(setmetatable({} :: ArrowProperties, (nil :: any) :: ArrowImpl))
 
 local Arrow = {} :: ArrowImpl
-Arrow.__index = Arrow
+
+function Arrow:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Arrow, index)
+end
 
 Arrow.adornee = nil
 Arrow.container = nil
@@ -83,7 +90,7 @@ function Arrow:assign(output, from, to)
 	adornmentLine.InnerRadius = 0
 	adornmentLine.Height = distance
 	adornmentLine.CFrame = orientation * CFrame.new(0, 0, -distance * 0.5)
-	adornmentLine.Color3 = self.color or Gizmo.color
+	adornmentLine.Color3 = self.color
 	adornmentLine.Transparency = self.transparency
 	adornmentLine.ZIndex = self.zindex
 	adornmentLine.Adornee = self.adornee
@@ -93,7 +100,7 @@ function Arrow:assign(output, from, to)
 	adornmentCone.Height = coneHeight
 	adornmentCone.Radius = coneHeight * 0.5
 	adornmentCone.CFrame = orientation * CFrame.new(0, 0, -distance)
-	adornmentCone.Color3 = self.color or Gizmo.color
+	adornmentCone.Color3 = self.color
 	adornmentCone.Transparency = self.transparency
 	adornmentCone.ZIndex = self.zindex
 	adornmentCone.Adornee = self.adornee
@@ -104,7 +111,7 @@ function Arrow:assign(output, from, to)
 end
 
 function Arrow:draw(from, to)
-	return self:assign(Arrow.default(), from, to)
+	return self:assign(self.default(), from, to)
 end
 
 return Arrow

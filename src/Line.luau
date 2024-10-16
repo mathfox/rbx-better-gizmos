@@ -30,7 +30,14 @@ export type LineImpl = LineProperties & {
 export type Line = typeof(setmetatable({} :: LineProperties, (nil :: any) :: LineImpl))
 
 local Line = {} :: LineImpl
-Line.__index = Line
+
+function Line:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Line, index)
+end
 
 Line.adornee = nil
 Line.container = nil
@@ -74,7 +81,7 @@ function Line:assign(output, from, to)
 	adornment.InnerRadius = 0
 	adornment.Height = distance
 	adornment.CFrame = CFrame.lookAt(from, to) * CFrame.new(0, 0, -distance * 0.5)
-	adornment.Color3 = self.color or Gizmo.color
+	adornment.Color3 = self.color
 	adornment.Transparency = self.transparency
 	adornment.ZIndex = self.zindex
 	adornment.Adornee = self.adornee

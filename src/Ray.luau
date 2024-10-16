@@ -34,7 +34,14 @@ export type RayImpl = RayProperties & {
 export type Ray = typeof(setmetatable({} :: RayProperties, (nil :: any) :: RayImpl))
 
 local Ray = {} :: RayImpl
-Ray.__index = Ray
+
+function Ray:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Ray, index)
+end
 
 Ray.adornee = nil
 Ray.container = nil
@@ -77,7 +84,7 @@ function Ray:assign(output, from, direction)
 end
 
 function Ray:draw(from, direction)
-	return self:assign(Ray.default(), from, direction)
+	return self:assign(self.default(), from, direction)
 end
 
 return Ray

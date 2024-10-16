@@ -30,7 +30,14 @@ export type BoxImpl = BoxProperties & {
 export type Box = typeof(setmetatable({} :: BoxProperties, (nil :: any) :: BoxImpl))
 
 local Box = {} :: BoxImpl
-Box.__index = Box
+
+function Box:__index(index)
+	if index == "color" then
+		return Gizmo.color
+	end
+
+	return rawget(Box, index)
+end
 
 Box.adornee = nil
 Box.container = nil
@@ -70,7 +77,7 @@ function Box:assign(output, orientation, size)
 
 	adornment.Size = size
 	adornment.CFrame = orientation
-	adornment.Color3 = self.color or Gizmo.color
+	adornment.Color3 = self.color
 	adornment.Transparency = self.transparency
 	adornment.ZIndex = self.zindex
 	adornment.Adornee = self.adornee
@@ -81,7 +88,7 @@ function Box:assign(output, orientation, size)
 end
 
 function Box:draw(orientation, size)
-	return self:assign(Box.default(), orientation, size)
+	return self:assign(self.default(), orientation, size)
 end
 
 return Box
