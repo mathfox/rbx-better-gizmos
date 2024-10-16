@@ -3,3 +3,7 @@ export interface GizmoClass<TClass, TParams extends unknown[]> {
 
 	new (...args: TParams): TClass;
 }
+
+export interface GizmoDefault<TOutput> {
+	readonly default: () => TOutput;
+}

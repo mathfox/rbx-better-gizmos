@@ -1,4 +1,4 @@
-import type { GizmoClass } from "./helpers";
+import type { GizmoClass, GizmoDefault } from "./helpers";
 
 interface Point {
 	color?: Color3;
@@ -8,20 +8,20 @@ interface Point {
 	alwaysOnTop: boolean;
 }
 
-declare namespace Point {
-	type Output = SphereHandleAdornment;
-}
+type PointOutput = SphereHandleAdornment;
 
-interface PointConstructor extends Point, GizmoClass<Point, [adornee: PVInstance, container: Instance]> {
+interface PointConstructor
+	extends Point,
+		GizmoClass<Point, [adornee: PVInstance, container: Instance]>,
+		GizmoDefault<PointOutput> {
 	readonly __index: PointConstructor;
 
-	readonly default: () => Point.Output;
+	draw(position: Vector3): PointOutput;
 
-	draw(position: Vector3): Point.Output;
-
-	assign<TOutput extends Point.Output>(output: TOutput, position: Vector3): TOutput;
+	assign<TOutput extends PointOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Point: PointConstructor;
 
+export as namespace Point;
 export = Point;

@@ -1,8 +1,8 @@
 //const value = new Point({} as any, {} as any);
 
-import Point from "./Point";
+import Point, { type Output } from "./Point";
 
-type v = Point.Output;
+type v = Output;
 
 const vdd = new Point({} as any, {} as any);
 Point.default();
