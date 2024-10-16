@@ -5,24 +5,14 @@
 export type PointProperties = {
 	adornee: PVInstance,
 	container: Instance,
-	color: Color3,
+	color: Color3?,
 	radius: number,
 	transparency: number,
 	zindex: number,
 	alwaysOnTop: boolean,
 }
 
-export type PointImpl = {
-	-- props
-	adornee: PVInstance,
-	container: Instance,
-	color: Color3?,
-	radius: number,
-	transparency: number,
-	zindex: number,
-	alwaysOnTop: boolean,
-	-- props
-
+export type PointImpl = PointProperties & {
 	__index: PointImpl,
 
 	_construct: (self: {}) -> Point,
