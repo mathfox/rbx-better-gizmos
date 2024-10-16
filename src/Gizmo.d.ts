@@ -1,4 +1,4 @@
-import type { GizmoClass } from "./helpers";
+import type { Constructable } from "./helpers";
 
 /**
  * Basically a wrapper around container and adornee part.
@@ -19,7 +19,7 @@ interface Gizmo {
 	//readonly point: Gizmo.PointConstructor;
 }
 
-declare interface GizmoConstructor extends Omit<Gizmo, "destroy">, GizmoClass<Gizmo, []> {
+declare interface GizmoConstructor extends Omit<Gizmo, "destroy">, Constructable<Gizmo, []> {
 	readonly __index: GizmoConstructor;
 
 	/**
@@ -30,4 +30,5 @@ declare interface GizmoConstructor extends Omit<Gizmo, "destroy">, GizmoClass<Gi
 
 declare const Gizmo: GizmoConstructor;
 
+export as namespace Gizmo;
 export = Gizmo;

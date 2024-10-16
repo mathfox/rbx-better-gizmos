@@ -2,6 +2,8 @@ import type Arrow from "./Arrow";
 import type { Constructable, Draw } from "./helpers";
 
 interface Ray {
+	readonly adornee: PVInstance;
+	readonly container: Instance;
 	color?: Color3;
 	scale: number;
 	transparency: number;

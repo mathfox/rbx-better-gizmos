@@ -1,6 +1,8 @@
 import type { Constructable, Draw } from "./helpers";
 
 interface Box {
+	readonly adornee: PVInstance;
+	readonly container: Instance;
 	color?: Color3;
 	scale: number;
 	transparency: number;

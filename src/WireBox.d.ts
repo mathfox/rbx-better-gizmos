@@ -2,6 +2,8 @@ import type { Tuple } from "@rbxts/phantom/src/Util/Tuple";
 import type { Constructable, Draw } from "./helpers";
 
 interface WireBox {
+	readonly adornee: PVInstance;
+	readonly container: Instance;
 	color?: Color3;
 	scale: number;
 	transparency: number;

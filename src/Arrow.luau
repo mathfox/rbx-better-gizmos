@@ -2,6 +2,8 @@
 --!native
 --!optimize 2
 
+local Gizmo = require(script.Parent.Gizmo)
+
 export type ArrowProperties = {
 	adornee: PVInstance,
 	container: Instance,
@@ -29,8 +31,6 @@ export type ArrowImpl = ArrowProperties & {
 }
 
 export type Arrow = typeof(setmetatable({} :: ArrowProperties, (nil :: any) :: ArrowImpl))
-
-local Gizmo = require(script.Parent.Gizmo)
 
 local Arrow = {} :: ArrowImpl
 Arrow.__index = Arrow
@@ -102,7 +102,7 @@ function Arrow:assign(output, from, to)
 end
 
 function Arrow:draw(from, to)
-	return Arrow:assign(Arrow.default(), from, to)
+	return self:assign(Arrow.default(), from, to)
 end
 
 return Arrow

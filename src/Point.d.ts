@@ -1,8 +1,8 @@
 import type { Constructable, Draw } from "./helpers";
 
 interface Point {
-	adornee: PVInstance;
-	container: Instance;
+	readonly adornee: PVInstance;
+	readonly container: Instance;
 	color?: Color3;
 	radius: number;
 	transparency: number;
