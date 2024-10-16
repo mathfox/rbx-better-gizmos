@@ -1,3 +1,3 @@
-import type Gizmo from "./Gizmo";
+import Gizmo from "./Gizmo";
 
 export = Gizmo;
