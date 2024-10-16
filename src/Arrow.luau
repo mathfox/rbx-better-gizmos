@@ -1,3 +1,7 @@
+--!nonstrict
+--!native
+--!optimize 2
+
 local Arrow = {} :: ArrowImpl
 
 function Arrow:draw(from, to, style)

@@ -25,7 +25,7 @@ declare interface GizmoConstructor {
 	 */
 	color: Color3;
 
-	_construct: (self_: object) => Gizmo;
+	readonly _construct: (self_: object) => Gizmo;
 
 	new (): Gizmo;
 }

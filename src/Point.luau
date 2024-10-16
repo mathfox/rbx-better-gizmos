@@ -27,6 +27,7 @@ Point:_construct(Gizmo.adornee, Gizmo.container)
 
 function Point.new(adornee, container)
 	return Point._construct({
+		color = Point.color,
 		radius = Point.radius,
 		alwaysOnTop = Point.alwaysOnTop,
 		transparency = Point.transparency,

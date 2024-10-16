@@ -1,5 +1,5 @@
 interface Point {
-	color: Color3;
+	color?: Color3;
 	radius: number;
 	transparency: number;
 	zindex: number;
@@ -9,6 +9,8 @@ interface Point {
 interface PointConstructor {
 	readonly __index: PointConstructor;
 
+	readonly _construct: (self_: object, adornee: PVInstance, container: Instance) => Point;
+
 	new (adornee: PVInstance, container: Instance): Point;
 
 	draw(position: Vector3): SphereHandleAdornment;
@@ -16,6 +18,6 @@ interface PointConstructor {
 	assign(output: SphereHandleAdornment, position: Vector3): SphereHandleAdornment;
 }
 
-declare const Point: PointConstructor & Omit<Point, "color"> & Partial<Pick<Point, "color">>;
+declare const Point: PointConstructor & Point;
 
 export = Point;
