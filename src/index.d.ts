@@ -1,43 +1,208 @@
-declare interface Style {
-	alwaysOnTop: boolean;
-	color: Color3;
-	layer: number;
-	scale: number;
-	transparency: number;
-}
+import type { Tuple } from "@rbxts/phantom/src/Util";
 
-type OptionalStyle = Partial<Style>;
+/**
+ * Basically a wrapper around container and adornee part.
+ */
+interface Gizmo {
+	/**
+	 * The container used to hold all of the handles.
+	 */
+	readonly container: Folder;
+	readonly adornee: Part;
 
-type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Callback ? K : never }[keyof T];
+	/**
+	 * Destroys the container and adornee part.
+	 * No further method calls are allow after this call.
+	 */
+	destroy(): void;
 
-declare interface GizmoClass<T extends (...args: Array<FunctionPropertyNames<InstanceType<typeof Gizmo>>>) => void> {
-	create: (...args: Parameters<T>) => GizmoClass<T>;
-	createWithStyle: (optionalStyle: OptionalStyle, ...args: Parameters<T>) => GizmoClass<T>;
-	disable(): void;
-	draw: (...args: Parameters<T>) => void;
-	drawWithStyle: (optionalStyle: OptionalStyle, ...args: Parameters<T>) => void;
-	enable(): void;
-	getStyle(): Style;
-	setStyle(optionalStyle: OptionalStyle): void;
-	update(...args: Parameters<T>): void;
+	readonly point: Gizmo.PointConstructor;
 }
 
 declare namespace Gizmo {
-	export const style: Style;
+	export type DefaultProperties<TDefaultsProperties> = TDefaultsProperties & {
+		_defaultProps: TDefaultsProperties;
+	};
 
-	export function enable(): typeof Gizmo;
-	export function disable(): typeof Gizmo;
+	export interface Draw<TOutput, TParams extends unknown[]> {
+		/**
+		 * Constructs a new instance from the given parameters.
+		 */
+		draw(...args: TParams): TOutput;
 
-	export const point: GizmoClass<(position: Vector3) => void>;
-	export const box: GizmoClass<(orientation: CFrame, size: Vector3) => void>;
-	export const wirebox: GizmoClass<(orientation: CFrame, size: Vector3) => void>;
-	export const sphere: GizmoClass<(position: Vector3, radius: number) => void>;
-	export const wiresphere: GizmoClass<(position: Vector3, radius: number) => void>;
-	export const line: GizmoClass<(from: Vector3, to: Vector3) => void>;
-	export const arrow: GizmoClass<(from: Vector3, to: Vector3) => void>;
-	export const ray: GizmoClass<(from: Vector3, direction: Vector3) => void>;
-	export const plane: GizmoClass<(cframe: CFrame, size: Vector2 | undefined) => void>;
-	export const text: GizmoClass<(position: Vector3, text: string, ...args: Array<number | string>) => void>;
+		/**
+		 * Assigns all of the properties of TOutput.
+		 * The same as `draw` method, except it does not create a new instance.
+		 */
+		assign(output: TOutput, ...args: TParams): TOutput;
+	}
+
+	export interface PointConstructor
+		extends Draw<SphereHandleAdornment, [position: Vector3]>,
+			DefaultProperties<{
+				color?: Color3;
+				radius: number;
+				transparency: number;
+				zindex: number;
+				alwaysOnTop: boolean;
+			}> {}
+
+	export interface Box
+		extends Draw<
+			BoxHandleAdornment,
+			[
+				orientation: CFrame,
+				size: Vector3,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	/**
+	 * Returns [x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4] handles.
+	 */
+	export interface WireBox
+		extends Draw<LuaTuple<Tuple<12, BoxHandleAdornment>>, [orientation: CFrame, size: Vector3]>,
+			DefaultProperties<{
+				scale: number;
+				color?: Color3;
+				transparency: number;
+				zindex: number;
+				alwaysOnTop: boolean;
+			}> {}
+
+	export interface Sphere
+		extends Draw<
+			SphereHandleAdornment,
+			[
+				position: Vector3,
+				radius: number,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	export interface WireSphere
+		extends Draw<
+			Tuple<3, CylinderHandleAdornment>,
+			[
+				position: Vector3,
+				radius: number,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	export interface Line
+		extends Draw<
+			CylinderHandleAdornment,
+			[
+				from: Vector3,
+				to: Vector3,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	export interface Arrow
+		extends Draw<
+			[CylinderHandleAdornment, ConeHandleAdornment],
+			[
+				from: Vector3,
+				to: Vector3,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	export interface Ray
+		extends Draw<
+			[CylinderHandleAdornment, ConeHandleAdornment],
+			[
+				from: Vector3,
+				direction: Vector3,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	export interface Plane
+		extends Draw<
+			BoxHandleAdornment,
+			[
+				cf: CFrame,
+				size?: Vector2,
+				style?: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
+
+	export interface Text
+		extends Draw<
+			{
+				billboard: BillboardGui;
+				label: TextLabel;
+			},
+			[
+				position: Vector3,
+				text: string,
+				style: Partial<{
+					scale: number;
+					color: Color3;
+					transparency: number;
+					zindex: number;
+					alwaysOnTop: boolean;
+				}>,
+			]
+		> {}
 }
+
+declare interface GizmoConstructor {
+	__index: GizmoConstructor;
+
+	/**
+	 * @default Color3.fromRGB(255, 255, 0)
+	 */
+	color: Color3;
+
+	new (): Gizmo;
+}
+
+declare const Gizmo: GizmoConstructor;
 
 export = Gizmo;

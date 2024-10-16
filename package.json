@@ -13,7 +13,7 @@
 		"type": "git",
 		"url": "git+https://github.com/mathfox/rbx-better-gizmos.git"
 	},
-	"keywords": ["roblox", "roblox-ts", "topo", "hooks"],
+	"keywords": ["roblox", "roblox-ts", "gizmos"],
 	"author": {
 		"name": "Ivan Leontev",
 		"url": "https://github.com/mathfox"
@@ -28,6 +28,9 @@
 	},
 	"devDependencies": {
 		"@rbxts/compiler-types": "^3.0.0-types.0",
-		"@rbxts/types": "^1.0.805",
+		"@rbxts/types": "^1.0.805"
+	},
+	"dependencies": {
+		"@rbxts/phantom": "^0.6.3"
 	}
 }
