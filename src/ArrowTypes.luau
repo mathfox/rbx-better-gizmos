@@ -12,24 +12,20 @@ export type ArrowProperties = {
 	alwaysOnTop: boolean,
 }
 
+export type ArrowOutput = {
+	adornmentLine: CylinderHandleAdornment,
+	adornmentCone: ConeHandleAdornment,
+}
+
 export type ArrowImpl = ArrowProperties & {
 	__index: ArrowImpl,
 
-	default: () -> CylinderHandleAdornment | ConeHandleAdornment,
-
+	default: () -> ArrowOutput,
 	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Arrow,
-
 	new: (adornee: PVInstance, container: Instance) -> Arrow,
 
-	draw: (self: Arrow, from: Vector3, to: Vector3) -> CylinderHandleAdornment | ConeHandleAdornment,
-
-	assign: (
-		self: Arrow,
-		adornmentLine: CylinderHandleAdornment,
-		adornmentCone: ConeHandleAdornment,
-		from: Vector3,
-		to: Vector3
-	) -> CylinderHandleAdornment | ConeHandleAdornment,
+	draw: (self: Arrow, from: Vector3, to: Vector3) -> ArrowOutput,
+	assign: (self: Arrow, output: ArrowOutput, from: Vector3, to: Vector3) -> ArrowOutput,
 }
 
 export type Arrow = typeof(setmetatable({} :: ArrowProperties, (nil :: any) :: ArrowImpl))

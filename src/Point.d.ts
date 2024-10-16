@@ -1,6 +1,8 @@
 import type { GizmoClass, GizmoDefault } from "./helpers";
 
 interface Point {
+	adornee: PVInstance;
+	container: Instance;
 	color?: Color3;
 	radius: number;
 	transparency: number;

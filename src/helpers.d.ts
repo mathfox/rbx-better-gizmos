@@ -4,6 +4,12 @@ export interface GizmoClass<TClass, TParams extends unknown[]> {
 	new (...args: TParams): TClass;
 }
 
-export interface GizmoDefault<TOutput> {
+export interface Default<TOutput> {
 	readonly default: () => TOutput;
+}
+
+export interface Draw<TOutput, TParams extends unknown[]> {
+	draw(...args: TParams): TOutput;
+
+	assign<TInput extends TOutput>(output: TInput, ...args: TParams): TInput;
 }

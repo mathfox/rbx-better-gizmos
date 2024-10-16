@@ -1,3 +1,5 @@
+import type { GizmoClass } from "./helpers";
+
 /**
  * Basically a wrapper around container and adornee part.
  */
@@ -17,19 +19,15 @@ interface Gizmo {
 	//readonly point: Gizmo.PointConstructor;
 }
 
-declare interface GizmoConstructor {
-	__index: GizmoConstructor;
+declare interface GizmoConstructor extends Omit<Gizmo, "destroy">, GizmoClass<Gizmo, []> {
+	readonly __index: GizmoConstructor;
 
 	/**
 	 * @default Color3.fromRGB(255, 255, 0)
 	 */
 	color: Color3;
-
-	readonly _construct: (self_: object) => Gizmo;
-
-	new (): Gizmo;
 }
 
-declare const Gizmo: GizmoConstructor & Omit<Gizmo, "destroy">;
+declare const Gizmo: GizmoConstructor;
 
 export = Gizmo;

@@ -16,9 +16,9 @@ interface BoxConstructor
 		GizmoDefault<BoxOutput> {
 	readonly __index: BoxConstructor;
 
-	draw(position: Vector3): BoxOutput;
+	draw(orientation: CFrame, size: Vector3): BoxOutput;
 
-	assign<TOutput extends BoxOutput>(output: TOutput, position: Vector3): TOutput;
+	assign<TOutput extends BoxOutput>(output: TOutput, orientation: CFrame, size: Vector3): TOutput;
 }
 
 declare const Box: BoxConstructor;
