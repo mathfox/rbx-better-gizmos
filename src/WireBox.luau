@@ -100,6 +100,7 @@ function WireBox:assign(output, orientation, size)
 		adornmentX1.ZIndex = self.zindex
 		adornmentX1.Adornee = self.adornee
 		adornmentX1.AlwaysOnTop = self.alwaysOnTop
+		adornmentX1.Parent = self.container
 	end
 
 	adornmentX1.Size = sizeX

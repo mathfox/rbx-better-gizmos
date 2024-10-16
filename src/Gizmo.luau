@@ -80,9 +80,15 @@ end
 Gizmo:_construct()
 
 function Gizmo.new()
-	local self = {
+	local self = Gizmo._construct({
 		color = Gizmo.color,
-	}
+	})
+
+	for key, value in Gizmo do
+		if type(value) == "table" and type(value.new) == "function" then
+			self[key] = value.new(self.adornee, self.container)
+		end
+	end
 
 	function self:destroy()
 		self.container:Destroy()
@@ -91,7 +97,7 @@ function Gizmo.new()
 		setmetatable(self :: any, nil)
 	end
 
-	return Gizmo._construct(self)
+	return self
 end
 
 return Gizmo

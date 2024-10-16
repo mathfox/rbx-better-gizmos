@@ -88,6 +88,7 @@ function Arrow:assign(output, from, to)
 	adornmentLine.ZIndex = self.zindex
 	adornmentLine.Adornee = self.adornee
 	adornmentLine.AlwaysOnTop = self.alwaysOnTop
+	adornmentLine.Parent = self.container
 
 	adornmentCone.Height = coneHeight
 	adornmentCone.Radius = coneHeight * 0.5
@@ -97,6 +98,7 @@ function Arrow:assign(output, from, to)
 	adornmentCone.ZIndex = self.zindex
 	adornmentCone.Adornee = self.adornee
 	adornmentCone.AlwaysOnTop = self.alwaysOnTop
+	adornmentCone.Parent = self.container
 
 	return { adornmentLine = adornmentLine, adornmentCone = adornmentCone }
 end

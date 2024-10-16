@@ -80,6 +80,7 @@ function Text:assign(output, position, text)
 	billboard.Size = UDim2.fromScale(text:len() * 0.5 * textScale, textScale)
 	billboard.LightInfluence = 0
 	billboard.Adornee = self.adornee
+	billboard.Parent = self.container
 
 	local label = output.label
 	label.Size = UDim2.fromScale(1, 1)

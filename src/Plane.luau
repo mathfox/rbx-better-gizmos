@@ -77,6 +77,7 @@ function Plane:assign(output, cf, size)
 	adornmentPlane.ZIndex = self.zindex
 	adornmentPlane.Adornee = self.adornee
 	adornmentPlane.AlwaysOnTop = self.alwaysOnTop
+	adornmentPlane.Parent = self.container
 
 	return adornmentPlane
 end

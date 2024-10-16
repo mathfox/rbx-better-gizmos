@@ -75,6 +75,7 @@ function Sphere:assign(output, position, radius)
 	adornment.ZIndex = self.zindex
 	adornment.Adornee = self.adornee
 	adornment.AlwaysOnTop = self.alwaysOnTop
+	adornment.Parent = self.container
 
 	return adornment
 end
