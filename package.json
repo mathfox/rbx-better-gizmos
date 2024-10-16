@@ -13,7 +13,7 @@
 		"type": "git",
 		"url": "git+https://github.com/mathfox/rbx-better-gizmos.git"
 	},
-	"keywords": ["roblox", "roblox-ts", "gizmos"],
+	"keywords": ["roblox", "roblox-ts", "gizmo", "draw", "debug", "debugger", "render"],
 	"author": {
 		"name": "Ivan Leontev",
 		"url": "https://github.com/mathfox"

@@ -1,3 +1,7 @@
+--!nonstrict
+--!native
+--!optimize 2
+
 export type WireSphereImpl = {
 	__index: WireSphereImpl,
 

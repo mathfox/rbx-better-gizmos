@@ -1,34 +1,86 @@
-export type SphereImpl = {
-	__index: SphereImpl,
+--!nonstrict
+--!native
+--!optimize 2
 
-	draw: (
-		self: Sphere,
-		position: Vector3,
-		radius: number,
-		style: {
-			scale: number?,
-			color: Color3?,
-			transparency: number?,
-			zindex: number?,
-			alwaysOnTop: boolean?,
-		}?
-	) -> SphereHandleAdornment,
+local Gizmo = require(script.Parent.Gizmo)
+
+export type SphereProperties = {
+	adornee: PVInstance,
+	container: Instance,
+	color: Color3?,
+	scale: number,
+	transparency: number,
+	zindex: number,
+	alwaysOnTop: boolean,
 }
 
-export type Sphere = typeof(setmetatable({} :: GizmoProperties, (nil :: any) :: SphereImpl))
+export type Output = SphereHandleAdornment
+
+export type SphereImpl = SphereProperties & {
+	__index: SphereImpl,
+
+	default: () -> Output,
+	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Sphere,
+	new: (adornee: PVInstance, container: Instance) -> Sphere,
+
+	draw: (self: Sphere, position: Vector3, radius: number) -> Output,
+	assign: (self: Sphere, output: Output, position: Vector3, radius: number) -> Output,
+}
+
+export type Sphere = typeof(setmetatable({} :: SphereProperties, (nil :: any) :: SphereImpl))
 
 local Sphere = {} :: SphereImpl
+Sphere.__index = Sphere
 
-function Sphere:draw(position, radius, style)
-	local adornment = Instance.new("SphereHandleAdornment")
+Sphere.adornee = nil
+Sphere.container = nil
+Sphere.color = nil
+Sphere.scale = 0.1
+Sphere.transparency = 0
+Sphere.zindex = 0
+Sphere.alwaysOnTop = true
+
+function Sphere.default()
+	return Instance.new("SphereHandleAdornment")
+end
+
+function Sphere:_construct(adornee, container)
+	self.adornee = adornee
+	self.container = container
+
+	setmetatable(self, Sphere)
+
+	return self
+end
+
+Sphere:_construct(Gizmo.adornee, Gizmo.container)
+
+function Sphere.new(adornee, container)
+	return Sphere._construct({
+		color = Sphere.color,
+		scale = Sphere.scale,
+		transparency = Sphere.transparency,
+		zindex = Sphere.zindex,
+		alwaysOnTop = Sphere.alwaysOnTop,
+	}, adornee, container)
+end
+
+function Sphere:assign(output, position, radius)
+	local adornment = output
 
 	adornment.Radius = radius
 	adornment.CFrame = CFrame.new(position)
-	adornment.Color3 = style and style.color or Gizmo.color
-	adornment.Transparency = style and style.transparency or 0
-	adornment.ZIndex = style and style.zindex or 1
+	adornment.Color3 = self.color or Gizmo.color
+	adornment.Transparency = self.transparency
+	adornment.ZIndex = self.zindex
 	adornment.Adornee = self.adornee
-	adornment.AlwaysOnTop = style and style.alwaysOnTop or true
+	adornment.AlwaysOnTop = self.alwaysOnTop
 
 	return adornment
 end
+
+function Sphere:draw(position, radius)
+	return self:assign(Sphere.default(), position, radius)
+end
+
+return Sphere

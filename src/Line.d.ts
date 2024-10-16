@@ -1,6 +1,8 @@
 import type { Constructable, Draw } from "./helpers";
 
 interface Line {
+	readonly adornee: PVInstance;
+	readonly container: Instance;
 	color?: Color3;
 	scale: number;
 	transparency: number;

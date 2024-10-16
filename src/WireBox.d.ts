@@ -5,7 +5,7 @@ interface WireBox {
 	readonly adornee: PVInstance;
 	readonly container: Instance;
 	color?: Color3;
-	scale: number;
+	lineWidth: number;
 	transparency: number;
 	zindex: number;
 	alwaysOnTop: boolean;
