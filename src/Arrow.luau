@@ -12,7 +12,7 @@ export type ArrowProperties = {
 	alwaysOnTop: boolean,
 }
 
-export type ArrowOutput = {
+export type Output = {
 	adornmentLine: CylinderHandleAdornment,
 	adornmentCone: ConeHandleAdornment,
 }
@@ -20,12 +20,12 @@ export type ArrowOutput = {
 export type ArrowImpl = ArrowProperties & {
 	__index: ArrowImpl,
 
-	default: () -> ArrowOutput,
+	default: () -> Output,
 	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Arrow,
 	new: (adornee: PVInstance, container: Instance) -> Arrow,
 
-	draw: (self: Arrow, from: Vector3, to: Vector3) -> ArrowOutput,
-	assign: (self: Arrow, output: ArrowOutput, from: Vector3, to: Vector3) -> ArrowOutput,
+	draw: (self: Arrow, from: Vector3, to: Vector3) -> Output,
+	assign: (self: Arrow, output: Output, from: Vector3, to: Vector3) -> Output,
 }
 
 export type Arrow = typeof(setmetatable({} :: ArrowProperties, (nil :: any) :: ArrowImpl))
@@ -35,6 +35,8 @@ local Gizmo = require(script.Parent.Gizmo)
 local Arrow = {} :: ArrowImpl
 Arrow.__index = Arrow
 
+Arrow.adornee = nil
+Arrow.container = nil
 Arrow.color = nil
 Arrow.scale = 0.1
 Arrow.transparency = 0

@@ -1,6 +1,8 @@
 import type { Constructable, Draw } from "./helpers";
 
 interface Arrow {
+	readonly adornee: PVInstance;
+	readonly container: Instance;
 	color?: Color3;
 	scale: number;
 	transparency: number;
@@ -18,7 +20,7 @@ declare namespace Arrow {
 interface ArrowConstructor
 	extends Arrow,
 		Constructable<Arrow, [adornee: PVInstance, container: Instance]>,
-		Draw<Arrow.Output, [position: Vector3]> {
+		Draw<Arrow.Output, [from: Vector3, to: Vector3]> {
 	readonly __index: ArrowConstructor;
 }
 
