@@ -2,11 +2,39 @@
 --!native
 --!optimize 2
 
-local GizmoTypes = require(script.Parent.GizmoTypes)
+export type GizmoImpl = {
+	__index: GizmoImpl,
+
+	color: Color3,
+
+	new: () -> Gizmo,
+
+	_construct: (self: {}) -> Gizmo,
+
+	destroy: (self: Gizmo) -> (),
+}
+
+export type GizmoProperties = {
+	adornee: PVInstance,
+	container: Folder,
+
+	--point: Point,
+	--box: Box,
+	--wirebox: WireBox,
+	--sphere: Sphere,
+	--wiresphere: WireSphere,
+	--line: Line,
+	--arrow: Arrow,
+	--ray: Ray,
+	--plane: Plane,
+	--text: Text,
+}
+
+export type Gizmo = typeof(setmetatable({} :: GizmoProperties, (nil :: any) :: GizmoImpl))
 
 local Gizmo = {} :: {
 	new: (
-	) -> GizmoTypes.Gizmo & {
+	) -> Gizmo & {
 		--point: PointTypes.Point,
 		--box: Box,
 		--wirebox: WireBox,
@@ -18,7 +46,7 @@ local Gizmo = {} :: {
 		--plane: Plane,
 		--text: Text,
 	},
-} & GizmoTypes.GizmoImpl & GizmoTypes.Gizmo
+} & GizmoImpl & Gizmo
 
 Gizmo.color = Color3.fromRGB(255, 255, 0)
 

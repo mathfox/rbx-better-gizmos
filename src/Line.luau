@@ -1,3 +1,26 @@
+--!nonstrict
+--!native
+--!optimize 2
+
+export type LineImpl = {
+	__index: LineImpl,
+
+	draw: (
+		self: Line,
+		from: Vector3,
+		to: Vector3,
+		style: {
+			scale: number?,
+			color: Color3?,
+			transparency: number?,
+			zindex: number?,
+			alwaysOnTop: boolean?,
+		}?
+	) -> CylinderHandleAdornment,
+}
+
+export type Line = typeof(setmetatable({} :: GizmoProperties, (nil :: any) :: LineImpl))
+
 local Line = {} :: LineImpl
 
 function Line:draw(from, to, style)

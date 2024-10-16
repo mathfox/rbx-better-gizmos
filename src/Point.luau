@@ -2,11 +2,34 @@
 --!native
 --!optimize 2
 
-local PointTypes = require(script.Parent.PointTypes)
+export type PointProperties = {
+	adornee: PVInstance,
+	container: Instance,
+	color: Color3?,
+	radius: number,
+	transparency: number,
+	zindex: number,
+	alwaysOnTop: boolean,
+}
+
+export type PointOutput = SphereHandleAdornment
+
+export type PointImpl = PointProperties & {
+	__index: PointImpl,
+
+	default: () -> PointOutput,
+	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Point,
+	new: (adornee: PVInstance, container: Instance) -> Point,
+
+	draw: (self: Point, position: Vector3) -> PointOutput,
+	assign: (self: Point, output: PointOutput, position: Vector3) -> PointOutput,
+}
+
+export type Point = typeof(setmetatable({} :: PointProperties, (nil :: any) :: PointImpl))
 
 local Gizmo = require(script.Parent.Gizmo)
 
-local Point = {} :: PointTypes.PointImpl
+local Point = {} :: PointImpl
 Point.__index = Point
 
 Point.color = nil
