@@ -12,18 +12,20 @@ export type PointProperties = {
 	alwaysOnTop: boolean,
 }
 
+type Output = SphereHandleAdornment
+
 export type PointImpl = PointProperties & {
 	__index: PointImpl,
 
-	default: () -> SphereHandleAdornment,
+	default: () -> Output,
 
 	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Point,
 
 	new: (adornee: PVInstance, container: Instance) -> Point,
 
-	draw: (self: Point, position: Vector3) -> SphereHandleAdornment,
+	draw: (self: Point, position: Vector3) -> Output,
 
-	assign: (self: Point, adornment: SphereHandleAdornment, position: Vector3) -> (),
+	assign: (self: Point, output: Output, position: Vector3) -> Output,
 }
 
 export type Point = typeof(setmetatable({} :: PointProperties, (nil :: any) :: PointImpl))

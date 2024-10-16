@@ -5,21 +5,23 @@ interface Arrow {
 	zindex: number;
 	alwaysOnTop: boolean;
 }
-
-declare namespace Arrow {
-	type Output = [CylinderHandleAdornment, ConeHandleAdornment];
+interface Output {
+	adornmentLine: CylinderHandleAdornment;
+	adornmentCone: ConeHandleAdornment;
 }
 
 interface ArrowConstructor {
 	readonly __index: ArrowConstructor;
 
+	readonly default: () => Output;
+
 	readonly _construct: (self_: object, adornee: PVInstance, container: Instance) => Arrow;
 
 	new (adornee: PVInstance, container: Instance): Arrow;
 
-	draw(position: Vector3): LuaTuple<Arrow.Output>;
+	draw(position: Vector3): Output;
 
-	assign(output: Arrow.Output, position: Vector3): LuaTuple<Arrow.Output>;
+	assign(output: Output, position: Vector3): Output;
 }
 
 declare const Arrow: ArrowConstructor & Arrow;

@@ -4,6 +4,8 @@
 
 local ArrowTypes = require(script.Parent.ArrowTypes)
 
+local Gizmo = require(script.Parent.Gizmo)
+
 local Arrow = {} :: ArrowTypes.ArrowImpl
 Arrow.__index = Arrow
 
@@ -12,6 +14,13 @@ Arrow.scale = 0.1
 Arrow.transparency = 0
 Arrow.zindex = 0
 Arrow.alwaysOnTop = true
+
+function Arrow.default()
+	local adornmentLine = Instance.new("CylinderHandleAdornment")
+	local adornmentCone = Instance.new("ConeHandleAdornment")
+
+	return { adornmentLine = adornmentLine, adornmentCone = adornmentCone }
+end
 
 function Arrow:_construct(adornee, container)
 	setmetatable(self, Arrow)
@@ -58,5 +67,5 @@ function Arrow:draw(from, to, style)
 	adornmentCone.Adornee = self.adornee
 	adornmentCone.AlwaysOnTop = style and style.alwaysOnTop or true
 
-	return { adornmentLine, adornmentCone }
+	return { adornmentLine = adornmentLine, adornmentCone = adornmentCone }
 end

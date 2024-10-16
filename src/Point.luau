@@ -2,8 +2,9 @@
 --!native
 --!optimize 2
 
-local Gizmo = require(script.Parent.Gizmo)
 local PointTypes = require(script.Parent.PointTypes)
+
+local Gizmo = require(script.Parent.Gizmo)
 
 local Point = {} :: PointTypes.PointImpl
 Point.__index = Point
@@ -14,7 +15,7 @@ Point.transparency = 0
 Point.zindex = 0
 Point.alwaysOnTop = true
 
-function Point._default()
+function Point.default()
 	return Instance.new("SphereHandleAdornment")
 end
 
