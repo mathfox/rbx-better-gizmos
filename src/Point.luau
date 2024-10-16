@@ -14,6 +14,10 @@ Point.transparency = 0
 Point.zindex = 0
 Point.alwaysOnTop = true
 
+function Point._default()
+	return Instance.new("SphereHandleAdornment")
+end
+
 function Point:_construct(adornee, container)
 	self.adornee = adornee
 	self.container = container
@@ -49,7 +53,7 @@ function Point:assign(adornment, position)
 end
 
 function Point:draw(position)
-	return self:assign(Instance.new("SphereHandleAdornment"), position)
+	return self:assign(self.default(), position)
 end
 
 return Point

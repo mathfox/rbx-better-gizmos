@@ -29,6 +29,8 @@ function Arrow.new(adornee, container)
 	}, adornee, container)
 end
 
+function Arrow:assign() end
+
 function Arrow:draw(from, to, style)
 	local coneHeight = (style and style.scale or 0.1) * 3
 	local distance = math.abs((to - from).Magnitude - coneHeight)

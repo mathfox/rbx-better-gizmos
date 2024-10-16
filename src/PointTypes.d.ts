@@ -6,20 +6,18 @@ interface Point {
 	alwaysOnTop: boolean;
 }
 
-declare namespace Point {
-	type Output = SphereHandleAdornment;
-}
-
 interface PointConstructor {
 	readonly __index: PointConstructor;
+
+	readonly default: () => SphereHandleAdornment;
 
 	readonly _construct: (self_: object, adornee: PVInstance, container: Instance) => Point;
 
 	new (adornee: PVInstance, container: Instance): Point;
 
-	draw(position: Vector3): Point.Output;
+	draw(position: Vector3): SphereHandleAdornment;
 
-	assign(output: Point.Output, position: Vector3): Point.Output;
+	assign(output: SphereHandleAdornment, position: Vector3): SphereHandleAdornment;
 }
 
 declare const Point: PointConstructor & Point;

@@ -15,6 +15,8 @@ export type PointProperties = {
 export type PointImpl = PointProperties & {
 	__index: PointImpl,
 
+	default: () -> SphereHandleAdornment,
+
 	_construct: (self: {}, adornee: PVInstance, container: Instance) -> Point,
 
 	new: (adornee: PVInstance, container: Instance) -> Point,
