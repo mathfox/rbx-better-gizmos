@@ -5,10 +5,6 @@
 	"main": "src/init.luau",
 	"types": "src/index.d.ts",
 	"files": ["src"],
-	"scripts": {
-		"build": "rbxtsc --type package",
-		"prepublishOnly": "bun run build"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mathfox/rbx-better-gizmos.git"
