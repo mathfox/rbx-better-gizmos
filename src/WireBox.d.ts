@@ -1,4 +1,5 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Tuple } from "@rbxts/phantom/src/Util/Tuple";
+import type { Constructable, Draw } from "./helpers";
 
 interface WireBox {
 	color?: Color3;
@@ -8,17 +9,18 @@ interface WireBox {
 	alwaysOnTop: boolean;
 }
 
-type WireBoxOutput = CylinderHandleAdornment;
+declare namespace WireBox {
+	type Output = LuaTuple<Tuple<12, BoxHandleAdornment>>;
+}
 
+/**
+ * Returns [x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4] handles.
+ */
 interface WireBoxConstructor
 	extends WireBox,
-		GizmoClass<WireBox, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<WireBoxOutput> {
+		Constructable<WireBox, [adornee: PVInstance, container: Instance]>,
+		Draw<WireBox.Output, [orientation: CFrame, size: Vector3]> {
 	readonly __index: WireBoxConstructor;
-
-	draw(position: Vector3): WireBoxOutput;
-
-	assign<TOutput extends WireBoxOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const WireBox: WireBoxConstructor;

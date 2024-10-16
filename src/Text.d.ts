@@ -1,4 +1,4 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Constructable, Draw } from "./helpers";
 
 interface Text {
 	color?: Color3;
@@ -8,17 +8,18 @@ interface Text {
 	alwaysOnTop: boolean;
 }
 
-type TextOutput = CylinderHandleAdornment;
+declare namespace Text {
+	interface Output {
+		billboard: BillboardGui;
+		label: TextLabel;
+	}
+}
 
 interface TextConstructor
 	extends Text,
-		GizmoClass<Text, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<TextOutput> {
+		Constructable<Text, [adornee: PVInstance, container: Instance]>,
+		Draw<Text.Output, [position: Vector3, text: string]> {
 	readonly __index: TextConstructor;
-
-	draw(position: Vector3): TextOutput;
-
-	assign<TOutput extends TextOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Text: TextConstructor;

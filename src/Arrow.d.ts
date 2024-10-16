@@ -1,4 +1,4 @@
-import type { Default, Draw, GizmoClass } from "./helpers";
+import type { Constructable, Draw } from "./helpers";
 
 interface Arrow {
 	color?: Color3;
@@ -8,20 +8,18 @@ interface Arrow {
 	alwaysOnTop: boolean;
 }
 
-interface ArrowOutput {
-	adornmentLine: CylinderHandleAdornment;
-	adornmentCone: ConeHandleAdornment;
+declare namespace Arrow {
+	interface Output {
+		adornmentLine: CylinderHandleAdornment;
+		adornmentCone: ConeHandleAdornment;
+	}
 }
 
 interface ArrowConstructor
 	extends Arrow,
-		GizmoClass<Arrow, [adornee: PVInstance, container: Instance]>,
-		Default<ArrowOutput>,
-		Draw<ArrowOutput, [position: Vector3]> {
+		Constructable<Arrow, [adornee: PVInstance, container: Instance]>,
+		Draw<Arrow.Output, [position: Vector3]> {
 	readonly __index: ArrowConstructor;
-
-	//draw(position: Vector3): ArrowOutput;
-	//assign<TOutput extends ArrowOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Arrow: ArrowConstructor;

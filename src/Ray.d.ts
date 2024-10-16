@@ -1,4 +1,5 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type Arrow from "./Arrow";
+import type { Constructable, Draw } from "./helpers";
 
 interface Ray {
 	color?: Color3;
@@ -8,17 +9,15 @@ interface Ray {
 	alwaysOnTop: boolean;
 }
 
-type RayOutput = CylinderHandleAdornment;
+declare namespace Ray {
+	type Output = Arrow.Output;
+}
 
 interface RayConstructor
 	extends Ray,
-		GizmoClass<Ray, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<RayOutput> {
+		Constructable<Ray, [adornee: PVInstance, container: Instance]>,
+		Draw<Ray.Output, [from: Vector3, direction: Vector3]> {
 	readonly __index: RayConstructor;
-
-	draw(position: Vector3): RayOutput;
-
-	assign<TOutput extends RayOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Ray: RayConstructor;

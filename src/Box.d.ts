@@ -1,4 +1,4 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Constructable, Draw } from "./helpers";
 
 interface Box {
 	color?: Color3;
@@ -8,17 +8,15 @@ interface Box {
 	alwaysOnTop: boolean;
 }
 
-type BoxOutput = BoxHandleAdornment;
+declare namespace Box {
+	type Output = BoxHandleAdornment;
+}
 
 interface BoxConstructor
 	extends Box,
-		GizmoClass<Box, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<BoxOutput> {
+		Constructable<Box, [adornee: PVInstance, container: Instance]>,
+		Draw<Box.Output, [orientation: CFrame, size: Vector3]> {
 	readonly __index: BoxConstructor;
-
-	draw(orientation: CFrame, size: Vector3): BoxOutput;
-
-	assign<TOutput extends BoxOutput>(output: TOutput, orientation: CFrame, size: Vector3): TOutput;
 }
 
 declare const Box: BoxConstructor;

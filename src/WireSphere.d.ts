@@ -1,4 +1,5 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Tuple } from "@rbxts/phantom/src/Util/Tuple";
+import type { Constructable, Draw } from "./helpers";
 
 interface WireSphere {
 	color?: Color3;
@@ -8,17 +9,13 @@ interface WireSphere {
 	alwaysOnTop: boolean;
 }
 
-type WireSphereOutput = CylinderHandleAdornment;
+type WireSphereOutput = Tuple<3, CylinderHandleAdornment>;
 
 interface WireSphereConstructor
 	extends WireSphere,
-		GizmoClass<WireSphere, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<WireSphereOutput> {
+		Constructable<WireSphere, [adornee: PVInstance, container: Instance]>,
+		Draw<WireSphereOutput, [position: Vector3, radius: number]> {
 	readonly __index: WireSphereConstructor;
-
-	draw(position: Vector3): WireSphereOutput;
-
-	assign<TOutput extends WireSphereOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const WireSphere: WireSphereConstructor;

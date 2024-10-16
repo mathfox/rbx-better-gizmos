@@ -1,4 +1,4 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Constructable, Draw } from "./helpers";
 
 interface Plane {
 	color?: Color3;
@@ -8,17 +8,15 @@ interface Plane {
 	alwaysOnTop: boolean;
 }
 
-type PlaneOutput = CylinderHandleAdornment;
+declare namespace Plane {
+	type Output = BoxHandleAdornment;
+}
 
 interface PlaneConstructor
 	extends Plane,
-		GizmoClass<Plane, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<PlaneOutput> {
+		Constructable<Plane, [adornee: PVInstance, container: Instance]>,
+		Draw<Plane.Output, [cf: CFrame, size?: Vector2]> {
 	readonly __index: PlaneConstructor;
-
-	draw(position: Vector3): PlaneOutput;
-
-	assign<TOutput extends PlaneOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Plane: PlaneConstructor;

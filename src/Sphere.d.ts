@@ -1,4 +1,4 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Constructable, Draw } from "./helpers";
 
 interface Sphere {
 	color?: Color3;
@@ -8,17 +8,15 @@ interface Sphere {
 	alwaysOnTop: boolean;
 }
 
-type SphereOutput = CylinderHandleAdornment;
+declare namespace Sphere {
+	type Output = SphereHandleAdornment;
+}
 
 interface SphereConstructor
 	extends Sphere,
-		GizmoClass<Sphere, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<SphereOutput> {
+		Constructable<Sphere, [adornee: PVInstance, container: Instance]>,
+		Draw<Sphere.Output, [position: Vector3, radius: number]> {
 	readonly __index: SphereConstructor;
-
-	draw(position: Vector3): SphereOutput;
-
-	assign<TOutput extends SphereOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Sphere: SphereConstructor;

@@ -1,4 +1,4 @@
-import type { GizmoClass, GizmoDefault } from "./helpers";
+import type { Constructable, Draw } from "./helpers";
 
 interface Line {
 	color?: Color3;
@@ -8,17 +8,15 @@ interface Line {
 	alwaysOnTop: boolean;
 }
 
-type LineOutput = CylinderHandleAdornment;
+declare namespace Line {
+	type Output = CylinderHandleAdornment;
+}
 
 interface LineConstructor
 	extends Line,
-		GizmoClass<Line, [adornee: PVInstance, container: Instance]>,
-		GizmoDefault<LineOutput> {
+		Constructable<Line, [adornee: PVInstance, container: Instance]>,
+		Draw<Line.Output, [from: Vector3, to: Vector3]> {
 	readonly __index: LineConstructor;
-
-	draw(position: Vector3): LineOutput;
-
-	assign<TOutput extends LineOutput>(output: TOutput, position: Vector3): TOutput;
 }
 
 declare const Line: LineConstructor;
