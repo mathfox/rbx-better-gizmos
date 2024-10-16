@@ -88,6 +88,15 @@ function WireBox:assign(output, orientation, size)
 
 	local relativeOrientation = orientation
 
+	for _, adornment in output do
+		adornment.Color3 = self.color
+		adornment.Transparency = self.transparency
+		adornment.ZIndex = self.zindex
+		adornment.Adornee = self.adornee
+		adornment.AlwaysOnTop = self.alwaysOnTop
+		adornment.Parent = self.container
+	end
+
 	local adornmentX1 = output[1]
 	local adornmentX2 = output[2]
 	local adornmentX3 = output[3]
@@ -101,48 +110,30 @@ function WireBox:assign(output, orientation, size)
 	local adornmentZ3 = output[11]
 	local adornmentZ4 = output[12]
 
-	for _, adornment in output do
-		adornmentX1.Color3 = self.color
-		adornmentX1.Transparency = self.transparency
-		adornmentX1.ZIndex = self.zindex
-		adornmentX1.Adornee = self.adornee
-		adornmentX1.AlwaysOnTop = self.alwaysOnTop
-		adornmentX1.Parent = self.container
-	end
-
 	adornmentX1.Size = sizeX
 	adornmentX1.CFrame = relativeOrientation * CFrame.new(0, y, z)
-
 	adornmentX2.Size = sizeX
 	adornmentX2.CFrame = relativeOrientation * CFrame.new(0, -y, z)
-
 	adornmentX3.Size = sizeX
 	adornmentX3.CFrame = relativeOrientation * CFrame.new(0, y, -z)
-
 	adornmentX4.Size = sizeX
 	adornmentX4.CFrame = relativeOrientation * CFrame.new(0, -y, -z)
 
 	adornmentY1.Size = sizeY
 	adornmentY1.CFrame = relativeOrientation * CFrame.new(x, 0, z)
-
 	adornmentY2.Size = sizeY
 	adornmentY2.CFrame = relativeOrientation * CFrame.new(-x, 0, z)
-
 	adornmentY3.Size = sizeY
 	adornmentY3.CFrame = relativeOrientation * CFrame.new(x, 0, -z)
-
 	adornmentY4.Size = sizeY
 	adornmentY4.CFrame = relativeOrientation * CFrame.new(-x, 0, -z)
 
 	adornmentZ1.Size = sizeZ
 	adornmentZ1.CFrame = relativeOrientation * CFrame.new(x, y, 0)
-
 	adornmentZ2.Size = sizeZ
 	adornmentZ2.CFrame = relativeOrientation * CFrame.new(-x, y, 0)
-
 	adornmentZ3.Size = sizeZ
 	adornmentZ3.CFrame = relativeOrientation * CFrame.new(x, -y, 0)
-
 	adornmentZ4.Size = sizeZ
 	adornmentZ4.CFrame = relativeOrientation * CFrame.new(-x, -y, 0)
 
